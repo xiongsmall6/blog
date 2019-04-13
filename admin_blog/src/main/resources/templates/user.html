@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>管理后台</title>
+    <link rel="stylesheet" href="js/vendor/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="js/vendor/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="js/vendor/webuploader/webuploader.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/common.css">
+</head>
+<body class="sidebar-fixed header-fixed">
+<div class="page-wrapper">
+    <nav class="navbar page-header">
+        <a href="#" class="btn btn-link sidebar-mobile-toggle d-md-none mr-auto">
+            <i class="fa fa-bars"></i>
+        </a>
+
+        <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">
+            <i class="fa fa-bars"></i>
+        </a>
+
+        <ul class="navbar-nav ml-auto">
+
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="imgs/avatar-1.png" class="avatar avatar-sm" alt="logo">
+                    <span class="small ml-1 d-md-down-none" th:text="${session.user.fullName}"></span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right">
+
+                    <a href="logout" class="dropdown-item">
+                        <i class="fa fa-lock"></i> 退出
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav">
+                    <li class="nav-title">菜单</li>
+
+                    <li class="nav-item">
+                        <a href="index" class="nav-link active">
+                            <i class="icon icon-notebook"></i> 文章管理
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="whisper" class="nav-link ">
+                            <i class="icon icon-calendar"></i> 微语管理
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="album" class="nav-link ">
+                            <i class="icon icon-picture"></i> 相册管理
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="comment" class="nav-link">
+                            <i class="icon icon-note"></i> 评论管理
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="user" class="nav-link ">
+                            <i class="icon icon-user"></i> 个人信息
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+
+        <div class="content">
+            <div class="row mt-4">
+                <div class="card col-lg-2">
+                    <div class="card-header">
+                        <strong>个人信息</strong>
+                    </div>
+                    <div class="card-body card-block">
+                        <div class="row form-group">
+                            <div class="headpic" style="width: 103px;" >
+                                <img style="border-radius: 50%;"  id="portrait"  th:if="${session.user.portrait!=null&&session.user.portrait!=''}" th:src="${session.user.portrait}"  width="103" height="103">
+                                <img style="border-radius: 50%;"  id="portrait"  th:if="${session.user.portrait==null||session.user.portrait==''}" src="imgs/avatar-1.png" width="103" height="103">
+                                <a id="picker" class="pos-absolute" href="javascript:;"></a>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="card-footer">
+                                <button id="editButton" class="btn btn-primary">编辑信息</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card col-lg-10"  id="showDiv">
+                    <div class="card-body card-block mt70">
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">用户名：</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static" th:text="${session.user.userName}"></p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">姓名：</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static" th:text="${session.user.fullName}"></p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">年龄：</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static" th:text="${session.user.age}"></p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">电话：</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static" th:text="${session.user.phone}"></p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">邮箱：</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static" th:text="${session.user.email}"></p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">qq号：</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static" th:text="${session.user.qq}"></p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">微信号：</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static" th:text="${session.user.wechat}"></p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">职业：</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static" th:text="${session.user.occupation}"></p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">兴趣爱好：</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static" th:text="${session.user.hobby}"></p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">座右铭：</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static" th:text="${session.user.motto}"></p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">微信二维码：</label></div>
+                            <div class="col-12 col-md-9">
+                                <img  th:style="'display:' + @{(${session.user.wechatCode} ? 'inline-block':'none' )} + ''"  th:src="${session.user.wechatCode}" width="200" height="200">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card col-lg-10 hide" id="editDiv">
+                    <div class="card-body card-block mt70">
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">用户名：</label></div>
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static" th:text="${session.user.userName}"></p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">姓名：</label></div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="fullName" th:value="${session.user.fullName}" maxlength="10" name="text-input" placeholder="请输入姓名" class="form-control">
+                                <small class="form-text text-muted"></small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">年龄：</label></div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="age" th:value="${session.user.age}" maxlength="3"  name="text-input" placeholder="请输入年龄" class="form-control">
+                                <small class="form-text text-muted"></small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">电话：</label></div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="phone" th:value="${session.user.phone}" maxlength="12"  name="text-input" placeholder="请输入电话" class="form-control">
+                                <small class="form-text text-muted"></small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">邮箱：</label></div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="email" th:value="${session.user.email}" maxlength="20" name="text-input" placeholder="请输入邮箱" class="form-control">
+                                <small class="form-text text-muted"></small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">qq号：</label></div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="qqNumber" th:value="${session.user.qq}"  maxlength="15" name="text-input" placeholder="请输入qq号" class="form-control">
+                                <small class="form-text text-muted"></small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">微信号：</label></div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="wechat" th:value="${session.user.wechat}"  maxlength="20"  name="text-input" placeholder="请输入微信号" class="form-control">
+                                <small class="form-text text-muted"></small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">职业：</label></div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="occupation" th:value="${session.user.occupation}" maxlength="32"  name="text-input" placeholder="请输入职业" class="form-control">
+                                <small class="form-text text-muted"></small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">兴趣爱好：</label></div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="hobby" th:value="${session.user.hobby}"  name="text-input" placeholder="请输入兴趣爱好" class="form-control">
+                                <small class="form-text text-muted"></small>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label class=" form-control-label">座右铭：</label></div>
+                            <div class="col-12 col-md-9">
+                                <textarea name="textarea-input" maxlength="300"  id="motto" th:text="${session.user.motto}"  rows="4"  class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <div class="btn btn-primary" id="wechatPicker">上传二维码</div>
+                            </div>
+                            <div class="col-12 col-md-9" >
+                                <img  id="wechatCode" th:style="'display:' + @{(${session.user.wechatCode} ? 'inline-block':'none' )} + ''"  th:src="${session.user.wechatCode}" width="200" height="200">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/vendor/jquery/jquery.min.js"></script>
+<script src="js/vendor/popper.js/popper.min.js"></script>
+<script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="js/vendor/webuploader/webuploader.js"></script>
+<script src="js/vendor/jq-paginator.js"></script>
+<script src="js/carbon.js"></script>
+<script src="js/user.js"></script>
+
+</body>
+</html>

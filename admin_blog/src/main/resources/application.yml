@@ -1,0 +1,53 @@
+server:
+    port: 8080
+    servlet:
+        session:
+            timeout: 1800s
+        context-path: /blog
+
+spring:
+    datasource:
+        name: blog
+        url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Hongkong
+        username: root
+        password: 123456
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    http:
+        encoding:
+            force: true
+            charset: utf-8
+            enabled: true
+    servlet:
+        multipart:
+            max-file-size: 20MB
+            max-request-size: 60MB
+
+    thymeleaf:
+        cache: false
+    jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: GMT+8
+
+mybatis:
+    mapper-locations: classpath:mapping/*.xml
+    type-aliases-package: com.xiong.blog.model
+
+devtools:
+    restart:
+    #热部署生效
+    enabled: true
+    #设置重启的目录
+    additional-paths: resources/**,static/**,templates/**
+    #该目录下的内容修改不重启
+    exclude: data/**
+
+pagehelper:
+    helper-dialect: mysql
+    reasonable: true
+    support-methods-arguments: true
+    params: count=countSql
+
+logging:
+    level:
+        com.xiong.blog.dao: debug
+

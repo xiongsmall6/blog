@@ -1,0 +1,132 @@
+.fullwidth{
+    width: 100%;
+}
+.red{
+    color: red;
+}
+.center{
+    text-align: center;
+}
+
+.width120{
+    width: 120px;
+}
+
+.width100{
+    width: 100px;
+}
+
+.marginRight20{
+    margin-right: 20px;
+}
+
+.pagination li{
+    color: #42a5f5;
+    background-color: transparent;
+    border-right: 1px solid #42a5f5;
+    border-top: 1px solid #42a5f5;
+    border-bottom:  1px solid #42a5f5;
+    display: inline-block;
+    font-weight: 400;
+    padding: .375rem .75rem;
+    line-height: 1.5;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+.pagination li:first-child{
+    border-left:  1px solid #42a5f5;
+}
+
+.pagination .active{
+    background-color: #42a5f5;
+}
+.pagination{
+    display:inline-block;
+}
+
+.back{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+
+td{
+    text-overflow: ellipsis;
+    -moz-text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left
+}
+table{
+    table-layout:fixed;
+}
+
+.autumn-grids {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    letter-spacing: -4px;
+    zoom: 1;
+}
+
+.autumn-grid {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    vertical-align: top;
+    letter-spacing: 0;
+    width: 200px;
+    margin: 0px 10px 10px 0;
+    background: #fff;
+    padding: 0px;
+}
+.autumn-grid  img{
+    width: 200px;
+    height: 200px;
+}
+.pull-right{
+    float: right;
+    margin-top: -28px;
+    position: relative;
+}
+
+.headpic{
+    position: relative;
+    width: 103px;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.card {
+    border: 1px solid #fff;
+}
+.headpic a {
+    position:absolute;
+    right: -5px;
+    bottom: 0;
+    width: 37px;
+    height: 37px;
+    background: url(../imgs/btn-edit.png) no-repeat;
+}
+.mt70{
+    margin-top: 70px;
+}
+.hide{
+    display: none;
+}
+
+.headpic .webuploader-pick{
+    width: 37px;
+    height: 37px;
+}
+
+#wechatPicker .webuploader-pick{
+    width: 100%;
+    height: 100%;
+}

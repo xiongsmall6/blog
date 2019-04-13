@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiong.blog.dao.AlbumMapper" >
+  <resultMap id="BaseResultMap" type="com.xiong.blog.model.Album" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="album_name" property="albumName" jdbcType="VARCHAR" />
+    <result column="album_type" property="albumType" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime"  />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ALbumVoResultMap" type="com.xiong.blog.vo.AlbumVo" extends="BaseResultMap">
+    <result column="pictures" property="pictures" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="AlbumVoPicturesMap" type="com.xiong.blog.vo.AlbumVo" extends="ALbumVoResultMap">
+    <collection property="albumDetails" ofType="com.xiong.blog.model.AlbumDetail" select="com.xiong.blog.dao.AlbumDetailMapper.selectByAlbumId" column="id">
+    </collection>
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    id, album_name, album_type, create_time ,create_user
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from album
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAlbumVos" resultMap="ALbumVoResultMap" parameterType="java.util.Map" >
+    select
+    id, album_name, album_type, create_time ,create_user, (select count(1) from album_detail d where d.album_id =a.id ) as pictures
+    from album a
+    where 1=1
+    <if test="albumName != null and albumName != ''" >
+      and album_name like CONCAT('%',#{albumName},'%')
+    </if>
+    order by  create_time desc
+  </select>
+
+
+  <select id="selectVoByPrimaryKey" resultMap="AlbumVoPicturesMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from album
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from album
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xiong.blog.model.Album" >
+    insert into album (id, album_name, album_type, create_time, create_user
+      )
+    values (#{id,jdbcType=INTEGER}, #{albumName,jdbcType=VARCHAR}, #{albumType,jdbcType=INTEGER}, #{createTime}, #{createUser,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xiong.blog.model.Album" >
+    insert into album
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="albumName != null" >
+        album_name,
+      </if>
+      <if test="albumType != null" >
+        album_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="albumName != null" >
+        #{albumName,jdbcType=VARCHAR},
+      </if>
+      <if test="album_type != null" >
+        #{albumType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiong.blog.model.Album" >
+    update album
+    <set >
+      <if test="albumName != null" >
+        album_name = #{albumName,jdbcType=VARCHAR},
+      </if>
+      <if test="albumType != null" >
+        album_type = #{albumType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiong.blog.model.Album" >
+    update album
+    set album_name = #{albumName,jdbcType=VARCHAR},
+      album_type = #{albumType,jdbcType=INTEGER},
+      create_time = #{createTime},
+      create_user = #{createUser,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

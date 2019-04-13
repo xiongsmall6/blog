@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>管理后台</title>
+    <link rel="stylesheet" href="js/vendor/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="js/vendor/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="js/vendor/ueditor/themes/default/css/umeditor.css" >
+    <link rel="stylesheet" href="js/vendor/webuploader/webuploader.css">
+    <link rel="stylesheet" href="css/common.css">
+</head>
+<body class="sidebar-fixed header-fixed">
+<input id="login_user" type="hidden" th:value="${session.user.userName}">
+<input id="article_id" type="hidden" th:value="${article.id}">
+<div class="page-wrapper">
+    <nav class="navbar page-header">
+        <a href="#" class="btn btn-link sidebar-mobile-toggle d-md-none mr-auto">
+            <i class="fa fa-bars"></i>
+        </a>
+
+        <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">
+            <i class="fa fa-bars"></i>
+        </a>
+
+        <ul class="navbar-nav ml-auto">
+
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="imgs/avatar-1.png" class="avatar avatar-sm" alt="logo">
+                    <span class="small ml-1 d-md-down-none" th:text="${session.user.fullName}"></span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right">
+
+                    <a href="logout" class="dropdown-item">
+                        <i class="fa fa-lock"></i> 退出
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav">
+                    <li class="nav-title">菜单</li>
+
+                    <li class="nav-item">
+                        <a href="index" class="nav-link active">
+                            <i class="icon icon-notebook"></i> 文章管理
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="whisper" class="nav-link ">
+                            <i class="icon icon-calendar"></i> 微语管理
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="album" class="nav-link ">
+                            <i class="icon icon-picture"></i> 相册管理
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="comment" class="nav-link">
+                            <i class="icon icon-note"></i> 评论管理
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="user" class="nav-link ">
+                            <i class="icon icon-user"></i> 个人信息
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header bg-light" >
+                            <a class="back" href="javascript:void(0)">&lt &nbsp返回</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>新增文章</strong>
+                        </div>
+                        <div class="card-body card-block">
+                            <form action="#"   class="form-horizontal">
+                                <div class="row form-group">
+                                    <input  type="hidden" class="form-control"  id="pageNum" th:value="${pageNum}">
+                                    <div class="col col-md-1"><label for="title" class=" form-control-label">文章标题</label></div>
+                                    <div class="col-12 col-md-5"><input type="text" id="title" name="title" placeholder="文章标题" class="form-control" th:value="${article.title}"><small id="title_tips" class="form-text text-muted"></small></div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-1"><label for="article_type" class=" form-control-label">文章类型</label></div>
+                                    <div class="col-12 col-md-5">
+                                        <select name="type"  id="article_type" class="form-control">
+                                            <option th:selected="${article.type}=='1'"  value="1">java文章</option>
+                                            <option th:selected="${article.type}=='2'"  value="2">python文章</option>
+                                            <option th:selected="${article.type}=='3'"  value="3">android文章</option>
+                                            <option th:selected="${article.type}=='4'"  value="4">其他文章</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-1"><label  class=" form-control-label">文章封面</label></div>
+                                    <div class="col-12 col-md-5" >
+                                        <div id="picker" class="btn btn-info col-12 col-md-5">
+                                            <i class="fa fa-upload"></i> 选择文件
+                                        </div>
+                                        <small id="cover_tips" class="form-text text-muted"></small>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-1"></div>
+                                    <div class="col-12 col-md-5" >
+                                        <img th:src="${article.picture}" id="cover_img" width="200px" height="200px"  th:style="'display:' + @{(${article.picture} ? 'block':'none' )} + ''" >
+                                        <input type="hidden" id="cover_url" th:value="${article.picture}">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-1"><label class=" form-control-label">是否置顶</label></div>
+                                    <div class="col col-md-5">
+                                        <div class="form-check">
+                                            <div class="checkbox">
+                                                <label for="istop" class="form-check-label ">
+                                                    <input type="checkbox" id="istop" name="istop"   th:checked="${article.top eq 1 }"  th:value="${article.top}" class="form-check-input">置顶
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-1"><label class=" form-control-label">文章内容</label></div>
+                                    <div class="col-12 col-md-11">
+                                        <div type="text/plain" id="myEditor" class="col col-md-12" style="height:240px;" th:utext="${article.content}">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer  center" >
+                            <button id="save_article" class="btn btn-primary btn-bg width120 marginRight20">
+                                <i class="fa fa-dot-circle-o"></i> 提交
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" charset="utf-8" src="js/vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/vendor/popper.js/popper.min.js"></script>
+<script type="text/javascript" charset="utf-8"  src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/vendor/ueditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/vendor/ueditor/umeditor.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/vendor/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/vendor/webuploader/webuploader.js"></script>
+<script type="text/javascript" charset="utf-8"  src="js/carbon.js"></script>
+<script type="text/javascript" charset="utf-8"  src="js/article.js"></script>
+</body>
+</html>

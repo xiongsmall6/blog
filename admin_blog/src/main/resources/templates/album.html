@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>相册管理</title>
+    <link rel="stylesheet" href="js/vendor/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="js/vendor/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/common.css">
+</head>
+<body class="sidebar-fixed header-fixed">
+<div class="page-wrapper">
+    <nav class="navbar page-header">
+        <a href="#" class="btn btn-link sidebar-mobile-toggle d-md-none mr-auto">
+            <i class="fa fa-bars"></i>
+        </a>
+
+        <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">
+            <i class="fa fa-bars"></i>
+        </a>
+
+        <ul class="navbar-nav ml-auto">
+
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="imgs/avatar-1.png" class="avatar avatar-sm" alt="logo">
+                    <span class="small ml-1 d-md-down-none" th:text="${session.user.fullName}"></span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right">
+
+                    <a href="logout" class="dropdown-item">
+                        <i class="fa fa-lock"></i> 退出
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav">
+                    <li class="nav-title">菜单</li>
+
+                    <li class="nav-item">
+                        <a href="index" class="nav-link ">
+                            <i class="icon icon-notebook"></i> 文章管理
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="whisper" class="nav-link ">
+                            <i class="icon icon-calendar"></i> 微语管理
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="album" class="nav-link active">
+                            <i class="icon icon-picture"></i> 相册管理
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="comment" class="nav-link">
+                            <i class="icon icon-note"></i> 评论管理
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="user" class="nav-link ">
+                            <i class="icon icon-user"></i> 个人信息
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+
+        <div class="content">
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <!-- <div class="card-header bg-light">
+                            搜索框
+                        </div> -->
+                        <input id="login_user" type="hidden" th:value="${session.user.userName}">
+                        <input  type="hidden" class="form-control"  id="pageCount" th:value="${pageInfo.pages}">
+                        <input  type="hidden" class="form-control"  id="pageNum" th:value="${pageInfo.pageNum}">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group" mb-3>
+                                        <select id="search_type" class="form-control">
+                                            <option value="0">全部</option>
+                                            <option value="1">普通相册</option>
+                                            <option value="2">亲子相册</option>
+                                            <option value="3">旅游相册</option>
+                                            <option value="4">情侣相册</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <input type="text" id="search_name"  class="form-control" placeholder="相册名称">
+                                        <span class="input-group-btn">
+                                            <button id="search_btn" type="button" class="btn btn-primary"><i class="fa fa-search"></i>搜索</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header bg-light">
+                                            相册列表
+                                        </div>
+                                        <div class="ml-4 mt-4">
+                                            <button id="add_album" type="button" href="javascript:void(0);" class="btn btn-primary">
+                                                <i class="fa fa-align-center"></i> &nbsp; 新增
+                                            </button>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="width100">相册ID</th>
+                                                        <th>相册名称</th>
+                                                        <th>相册类型</th>
+                                                        <th>照片数量</th>
+                                                        <th>创建时间</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="album_list">
+                                                    <tr  th:each="album,iterStat : ${pageInfo.list}">
+                                                        <td  th:text="${album.id}"></td>
+                                                        <td  th:text="${album.albumName}"></td>
+                                                        <td th:switch="${album.albumType}">
+                                                            <span th:case="1">普通相册</span>
+                                                            <span th:case="2">亲子相册</span>
+                                                            <span th:case="3">旅游相册</span>
+                                                            <span th:case="4">情侣相册</span>
+                                                        </td>
+                                                        <td th:text="${album.pictures}"></td>
+                                                        <td th:text="${#dates.format(album.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                                        <td>
+                                                            <button th:attr="data-albumid=${album.id},data-albumname=${album.albumName},data-albumtype=${album.albumType}"  type="button" class="btn btn-primary btn-sm edit-album">
+                                                                <i class="fa fa-edit"></i> &nbsp;编辑
+                                                            </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <button th:attr="data-albumid=${album.id}" type="button" class="btn btn-primary btn-sm upload-album">
+                                                                <i class="fa fa-edit"></i> &nbsp;上传图片
+                                                            </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <button th:attr="data-albumid=${album.id}" type="button" class="btn btn-danger btn-sm delete-album">
+                                                                <i class="fa fa-trash"></i> &nbsp; 删除
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="center">
+                                                <ul id="jqpage" class="pagination">
+
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top:200px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">新建相册</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group  mb-3">
+                    <input type="hidden"  id="albumId"  >
+                    <input type="text" placeholder="相册名称" id="albumName" maxlength="30" class="form-control">
+                </div>
+                <div class="input-group  mb-3">
+                    <select   id="albumType"   class="form-control">
+                        <option value="1">普通相册</option>
+                        <option value="2">亲子相册</option>
+                        <option value="3">旅游相册</option>
+                        <option value="4">情侣相册</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="addAlbum" class="btn btn-primary">提交</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script src="js/vendor/jquery/jquery.min.js"></script>
+<script src="js/vendor/popper.js/popper.min.js"></script>
+<script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="js/vendor/jq-paginator.js"></script>
+<script src="js/carbon.js"></script>
+<script src="js/album.js"></script>
+
+</body>
+</html>
