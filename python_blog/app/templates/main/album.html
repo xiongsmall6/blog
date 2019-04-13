@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='layui/css/layui.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/main.css')}}">
+</head>
+<body>
+  <div class="header">
+    <div class="menu-btn">
+      <div class="menu"></div>
+    </div>
+    <h1 class="logo">
+      <a href="index.html">
+        <span>MYBLOG</span>
+        <img src="static/img/logo.png">
+      </a>
+    </h1>
+    <div class="nav">
+      <a href="./">文章</a>
+      <a href="whisper">微语</a>
+      <a href="album"  class="active">相册</a>
+      <a href="about">关于</a>
+    </div>
+    <p class="welcome-text">
+      欢迎来到<span class="name">小明</span>的博客~
+    </p>
+  </div>
+  <input type="hidden" id="albumCount" value="{{total}}">
+  <div class="album-content w1000"  id="layer-photos-demo" class="layer-photos-demo">
+    <div class="img-info">
+      {% if data[0].pictures %}
+      {% for item in data[0].pictures %}
+        {% if loop.first %}
+        <img class="image-info" width="700px" height="400px" src="{{item.img_url}}" alt="">
+         {%else%}
+        <img src="{{item.img_url}}" style="display:none">
+        {%endif%}
+      {% endfor %}
+      {%else%}
+       <img class="image-info" width="700px" height="400px" src="static/img/xc_img1.jpg" alt="">
+      {%endif%}
+      <div class="title">
+        <p class="data">
+          {% if data[0].type==1 %}
+            普通相册
+          {% elif data[0].type==2  %}
+            亲子相册
+          {% elif data[0].type==3  %}
+            旅游相册
+          {% else  %}
+            情侣相册
+          {% endif %}
+          <span>{{data[0].create_time}}</span></p>
+        <p class="text">{{data[0].album_name}}</p>
+      </div>
+    </div>
+    <div class="img-list">
+      <div class="layui-fluid" style="padding:0">
+        <div class="layui-row layui-col-space30 space" id="album_list">
+           {% for item in data %}
+            {% if not loop.first %}
+          <div class="layui-col-xs12 layui-col-sm4 layui-col-md4">
+            <div class="item">
+              {% if item.pictures %}
+               {% for pic in item.pictures %}
+                {% if loop.first %}
+                <img class="image-info" width="233px" height="155px" src="{{pic.img_url}}" alt="">
+                 {%else%}
+                <img src="{{pic.img_url}}" style="display:none">
+                {%endif%}
+              {% endfor %}
+              {%else%}
+              <img class="image-info" width="233px" height="155px" src="static/img/xc_img5.jpg" alt="">
+              {%endif%}
+              <div class="cont-text">
+                <div class="data">{{item.create_time}}</div>
+                <p class="address"><i class="layui-icon layui-icon-type"></i><span>
+                  {% if item.type==1 %}
+                      普通相册
+                    {% elif item.type==2  %}
+                      亲子相册
+                    {% elif item.type==3  %}
+                      旅游相册
+                    {% else  %}
+                      情侣相册
+                    {% endif %}
+                </span></p>
+                <p class="briefly">{{item.album_name}}</p>
+              </div>
+            </div>
+          </div>
+          {%endif%}
+          {% endfor %}
+        </div>
+      </div>
+      <div id="demo"></div>
+    </div>
+  </div>
+
+
+  <div class="footer-wrap">
+    <div class="footer w1000">
+      <div class="qrcode">
+        <img width="160px" height="160px" src="{{user.wechat_code}}">
+      </div>
+      <div class="practice-mode">
+        <img src="{{url_for('static', filename='img/down_img.jpg')}}">
+        <div class="text">
+          <h4 class="title">我的联系方式</h4>
+          <p>微信<span class="WeChat">{{user.wechat}}</span></p>
+          <p>手机<span class="iphone">{{user.phone}}</span></p>
+          <p>邮箱<span class="email">{{user.email}}</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{url_for('static', filename='js/jquery.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='layui/layui.all.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/album.js')}}"></script>
+  <script type="text/javascript">
+
+  </script>
+</body>
+</html>

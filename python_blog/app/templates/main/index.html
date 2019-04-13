@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>我的博客</title>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='layui/css/layui.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/main.css')}}">
+</head>
+<body>
+  <div class="header">
+    <div class="menu-btn">
+      <div class="menu"></div>
+    </div>
+    <h1 class="logo">
+      <a href="./">
+        <span>{{user.full_name}}的博客</span>
+        <img src="{{url_for('static', filename='img/logo.png')}}">
+      </a>
+    </h1>
+    <div class="nav">
+      <a href="./" class="active">文章</a>
+      <a href="whisper">微语</a>
+      <a href="album">相册</a>
+      <a href="about">关于</a>
+    </div>
+    <p class="welcome-text">
+      欢迎来到<span class="name">{{user.full_name}}</span>的博客~
+    </p>
+  </div>
+
+  <div class="banner">
+    <div class="cont w1000">
+      <div class="title">
+        <h1>{{user.full_name}}的博客</h1>
+        <h1>{{user.motto}}</h1>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="cont w1000">
+      <div class="title type-tab">
+        <span class="layui-breadcrumb" lay-separator="|">
+          <a href="javascript:;"   {% if type==1 %} class="active" {% endif %} data-type="1">java文章</a>
+          <a href="javascript:;" {% if type==2 %} class="active" {% endif %} data-type="2">python文章</a>
+          <a href="javascript:;" {% if type==3 %} class="active" {% endif %} data-type="3">android文章</a>
+          <a href="javascript:;" {% if type==4 %} class="active" {% endif %} data-type="4">其他文章</a>
+        </span>
+      </div>
+      <input type="hidden" id="articleCount" value="{{data.total}}">
+      <input type="hidden" id="pageNum" value="{{data.page}}">
+      <input type="hidden" id="type" value="{{type}}">
+      <div class="list-item">
+        {% for item in data.items %}
+        <div class="item">
+          <div class="layui-fluid">
+            <div class="layui-row">
+              <div class="layui-col-xs12 layui-col-sm4 layui-col-md5">
+                <div class="img"><img src="{{item.picture}}" alt=""></div>
+              </div>
+              <div class="layui-col-xs12 layui-col-sm8 layui-col-md7">
+                <div class="item-cont">
+                  <h3>{{item.title}}<button class="layui-btn layui-btn-danger new-icon">new</button></h3>
+                  <h5>
+                    {% if item.type==1 %}
+                      java文章
+                    {% elif item.type==2  %}
+                      python文章
+                    {% elif item.type==2  %}
+                      android文章
+                    {% else  %}
+                      其他文章
+                    {% endif %}
+                  </h5>
+                  <p>{{item.content | striptags}}</p>
+                  <a href="javascript:void(0);" data-id="{{item.id}}" class="go-icon"></a>
+                </div>
+            </div>
+            </div>
+           </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div id="demo" style="text-align: center;"></div>
+    </div>
+  </div>
+
+  <div class="footer-wrap">
+    <div class="footer w1000">
+      <div class="qrcode">
+        <img width="160px" height="160px" src="{{user.wechat_code}}">
+      </div>
+      <div class="practice-mode">
+        <img src="{{url_for('static', filename='img/down_img.jpg')}}">
+        <div class="text">
+          <h4 class="title">我的联系方式</h4>
+          <p>微信<span class="WeChat">{{user.wechat}}</span></p>
+          <p>手机<span class="iphone">{{user.phone}}</span></p>
+          <p>邮箱<span class="email">{{user.email}}</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{url_for('static', filename='js/jquery.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='layui/layui.all.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/index.js')}}"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='layui/css/layui.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/main.css')}}">
+</head>
+<body>
+  <div class="header">
+    <div class="menu-btn">
+      <div class="menu"></div>
+    </div>
+    <h1 class="logo">
+      <a href="./">
+        <span>我的博客</span>
+        <img src="{{url_for('static', filename='img/logo.png')}}">
+      </a>
+    </h1>
+    <div class="nav">
+      <a href="./" class="active">文章</a>
+      <a href="whisper">微语</a>
+      <a href="album">相册</a>
+      <a href="about"  >关于</a>
+    </div>
+    <p class="welcome-text">
+      欢迎来到<span class="name">小明</span>的博客~
+    </p>
+  </div>
+  <input type="hidden" value="{{details.article.type}}" id="articleType">
+  <input type="hidden" value="{{details.article.id}}" id="articleId">
+  <div class="content whisper-content leacots-content details-content">
+    <div class="cont w1000">
+      <div class="whisper-list">
+        <div class="item-box">
+          <div class="review-version">
+              <div class="form-box">
+                <div class="article-cont">
+                  <div class="title">
+                    <h3>{{details.article.title}}</h3>
+                    <p class="cont-info"><span class="data">{{details.article.create_time}}</span><span class="types">
+                      {% if details.article.type==1 %}
+                          java文章
+                      {% elif details.article.type==2 %}
+                          python文章
+                      {% elif details.article.type==3 %}
+                          android文章
+                      {% else  %}
+                          其他文章
+                      {% endif %}
+                    </span></p>
+                  </div>
+                  <div id="content">
+                    {{details.article.content | safe}}
+                  </div>
+                  <div class="btn-box">
+                    <button class="layui-btn layui-btn-primary otherArticle" data-id = {{details.prev_id}}>上一篇</button>
+                    <button class="layui-btn layui-btn-primary otherArticle" data-id = {{details.next_id}}>下一篇</button>
+                  </div>
+                </div>
+                <div class="form">
+                  <div class="layui-form-item layui-form-text">
+                    <div class="layui-input-block">
+                      <textarea id="commentStr" placeholder="既然来了，就说几句" class="layui-textarea"></textarea>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <div class="layui-input-block" style="text-align: right;">
+                      <button class="layui-btn" id="submitComment" >確定</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="volume">
+                全部留言 <span id="commentCount">{{details.comment.total}}</span>
+              </div>
+              <div class="list-cont">
+                {% for item in details.comment.items %}
+                <div class="cont">
+                  <div class="img">
+                    <img src="static/img/header.png" alt="">
+                  </div>
+                  <div class="text">
+                    <p class="tit"><span class="name">{{item.create_user}}</span><span class="data">{{item.create_time}}</span></p>
+                    <p class="ct">{{item.comment}}</p>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+          </div>
+        </div>
+      </div>
+      <div id="demo" style="text-align: center;"></div>
+    </div>
+  </div>
+
+  <div class="footer-wrap">
+    <div class="footer w1000">
+      <div class="qrcode">
+        <img width="160px" height="160px" src="{{user.wechat_code}}">
+      </div>
+      <div class="practice-mode">
+        <img src="{{url_for('static', filename='img/down_img.jpg')}}">
+        <div class="text">
+          <h4 class="title">我的联系方式</h4>
+          <p>微信<span class="WeChat">{{user.wechat}}</span></p>
+          <p>手机<span class="iphone">{{user.phone}}</span></p>
+          <p>邮箱<span class="email">{{user.email}}</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{url_for('static', filename='js/jquery.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='layui/layui.all.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/details.js')}}"></script>
+</body>
+</html>

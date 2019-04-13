@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>我的博客</title>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='layui/css/layui.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/main.css')}}">
+</head>
+<body>
+  <div class="header">
+    <div class="menu-btn">
+      <div class="menu"></div>
+    </div>
+    <h1 class="logo">
+      <a href="index.html">
+        <span>我的博客</span>
+        <img  src="{{url_for('static', filename='img/logo.png')}}">
+      </a>
+    </h1>
+    <div class="nav">
+      <a href="./">文章</a>
+      <a href="whisper"  class="active">微语</a>
+      <a href="album">相册</a>
+      <a href="about">关于</a>
+    </div>
+    <ul class="layui-nav header-down-nav">
+      <li class="layui-nav-item"><a href="index.html">文章</a></li>
+      <li class="layui-nav-item"><a href="whisper.html"  class="active">微语</a></li>
+      <li class="layui-nav-item"><a href="leacots.html">留言</a></li>
+      <li class="layui-nav-item"><a href="album.html">相册</a></li>
+      <li class="layui-nav-item"><a href="about.html">关于</a></li>
+    </ul>
+    <p class="welcome-text">
+      欢迎来到<span class="name">小明</span>的博客~
+    </p>
+  </div>
+
+
+  <div class="content whisper-content">
+    <div class="cont">
+      <div class="whisper-list">
+         {% for item in data.rows %}
+        <div class="item-box">
+          <div class="item">
+            <div class="whisper-title">
+              <i class="layui-icon layui-icon-date"></i><span class="hour">{{item.create_data_time}}</span><span class="date">{{item.create_time}}</span>
+            </div>
+            <p class="text-cont">{{item.content}}</p>
+            <div class="img-box">
+              {% if item.pic1 %}
+              <img width="220px" height="138px" src="{{item.pic1}}">
+              {% endif %}
+               {% if item.pic2 %}
+              <img  width="220px" height="138px" src="{{item.pic2}}">
+              {% endif %}
+              {% if item.pic3 %}
+              <img  width="220px" height="138px" src="{{item.pic3}}">
+              {% endif %}
+            </div>
+            <div class="op-list">
+              <p class="like" data-id="{{item.id}}"><i class="layui-icon layui-icon-praise"></i><span>{{item.praise}}</span></p>
+              <p class="edit"><i class="layui-icon layui-icon-reply-fill"></i><span class="comment-count">{{item.comment_count}}</span></p>
+              <p class="off" data-id="{{item.id}}"><span>展开</span><i class="layui-icon layui-icon-down"></i></p>
+            </div>
+          </div>
+          <div class="review-version layui-hide">
+              <div class="form">
+                <img src="static/img/header2.png">
+                  <div class="layui-form-item layui-form-text">
+                    <div class="layui-input-block">
+                      <textarea  class="layui-textarea whisperComment" ></textarea>
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <div class="layui-input-block" style="text-align: right;">
+                      <button data-id="{{item.id}}" class="layui-btn definite submitComment" >確定</button>
+                    </div>
+                  </div>
+              </div>
+              <div class="list-cont">
+
+              </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div id="demo" style="text-align: center;"></div>
+    </div>
+  </div>
+   <div class="footer-wrap">
+    <div class="footer w1000">
+      <div class="qrcode">
+        <img width="160px" height="160px"  src="{{user.wechat_code}}">
+      </div>
+      <div class="practice-mode">
+        <img src="{{url_for('static', filename='img/down_img.jpg')}}">
+        <div class="text">
+          <h4 class="title">我的联系方式</h4>
+          <p>微信<span class="WeChat">{{user.wechat}}</span></p>
+          <p>手机<span class="iphone">{{user.phone}}</span></p>
+          <p>邮箱<span class="email">{{user.email}}</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{url_for('static', filename='js/jquery.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='layui/layui.all.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/whisper.js')}}"></script>
+</body>
+</html>
