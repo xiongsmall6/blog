@@ -1,0 +1,98 @@
+.login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -235px;
+    margin-top: -180px;
+    box-sizing: border-box;
+    width: 470px;
+    height: 360px;
+    background-color: #E6E6E6;
+    z-index: 100;
+}
+
+.login .login-panel {
+    height: 360px;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.login .login-title {
+    text-align: center;
+    color: #62a8ea;
+}
+
+.login .login-title h2 {
+    letter-spacing: 10px;
+}
+
+.login-container {
+    width: 100%;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 20px 0 0;
+    text-align: center;
+}
+
+.login .input {
+    border: 1px solid white;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 80%;
+    height: 46px;
+    padding-left: 10px;
+    margin: 0 auto;
+    font-size: 14px;
+    outline: none;
+    color: #76838f;
+}
+
+.login .login-validation {
+    width: 80%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.login .validation-input {
+    position: absolute;
+    width: 250px;
+    left: 0px;
+}
+
+.login img.validation-img {
+    position: absolute;
+    cursor: pointer;
+    width: 125px;
+    height: 45px;
+    right: 0px;
+}
+
+.login .input:focus {
+    outline: none;
+    border: 1px solid #62a8ea;
+}
+
+.login .btn-login {
+    background-color: #62a8ea;
+    border: none;
+    width: 80%;
+    height: 45px;
+    line-height: 45px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.login .btn-login:hover {
+    opacity: 0.9;
+}
+
+#login_tips{
+    height: 25px;
+    color: red;
+}
